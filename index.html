@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SebMarquez - Coding Projects</title>
+    <title>Sebastian Marquez</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,315 +15,666 @@
         }
 
         :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #ec4899;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            --bg-black: #0a0a0a;
+            --bg-dark: #111111;
+            --bg-card: #1a1a1a;
+            --text-white: #e8e8e8;
+            --text-grey: #a0a0a0;
+            --text-dim: #6b6b6b;
+            --accent-blue: #4a5568;
+            --accent-blue-light: #5a6578;
+            --border-color: #2a2a2a;
+            --terminal-green: #4ade80;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            background: var(--bg-black);
+            color: var(--text-white);
             line-height: 1.6;
+            font-size: 14px;
             overflow-x: hidden;
         }
 
-        /* Animated background */
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        /* Terminal cursor blink */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
-        .background::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--text-white);
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
         }
 
         /* Header */
         header {
-            text-align: center;
-            padding: 4rem 0 2rem;
-            animation: fadeInDown 1s ease-out;
+            background: var(--bg-dark);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(17, 17, 17, 0.95);
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        h1 {
-            font-size: 3.5rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-            font-weight: 700;
+        .name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-white);
             letter-spacing: -0.02em;
         }
 
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            animation: fadeIn 1.2s ease-out;
+        .name::before {
+            content: '$ ';
+            color: var(--terminal-green);
+            font-weight: 400;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Main content */
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        nav {
+            display: flex;
             gap: 2rem;
-            margin-top: 3rem;
-            animation: fadeInUp 1s ease-out 0.3s both;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card {
-            background: var(--bg-card);
-            border-radius: 1rem;
-            padding: 2rem;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            transition: all 0.3s ease;
+        nav a {
+            color: var(--text-grey);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
             position: relative;
-            overflow: hidden;
         }
 
-        .card::before {
+        nav a:hover {
+            color: var(--text-white);
+        }
+
+        nav a::after {
             content: '';
             position: absolute;
-            top: 0;
+            bottom: -4px;
             left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-blue-light);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
             width: 100%;
-            height: 4px;
-            background: var(--gradient);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Terminal prompt style */
+        .prompt {
+            color: var(--terminal-green);
+            margin-right: 0.5rem;
+        }
+
+        /* Hero section */
+        .hero {
+            margin-bottom: 4rem;
+        }
+
+        .hero-line {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--text-grey);
+        }
+
+        .hero-line .command {
+            color: var(--text-white);
+        }
+
+        .hero-line .comment {
+            color: var(--text-dim);
+            font-style: italic;
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '> ';
+            color: var(--terminal-green);
+        }
+
+        /* Grid layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Card styling */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            transition: all 0.2s;
+            position: relative;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            border-color: var(--accent-blue);
+            background: var(--bg-dark);
         }
 
-        .card:hover::before {
-            transform: scaleX(1);
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-white);
         }
 
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
+        .card-title::before {
+            content: '└─ ';
+            color: var(--accent-blue-light);
         }
 
-        .card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
+        .card-content {
+            color: var(--text-grey);
+            font-size: 0.9rem;
+            line-height: 1.7;
         }
 
-        .card p {
-            color: var(--text-secondary);
-            line-height: 1.8;
+        /* Code block style */
+        .code-block {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent-blue);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
         }
 
-        /* Welcome message */
-        .welcome-section {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: var(--bg-card);
-            border-radius: 1rem;
-            margin: 2rem 0;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            animation: fadeInUp 1s ease-out 0.2s both;
+        .code-line {
+            margin-bottom: 0.5rem;
         }
 
-        .welcome-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .code-line:last-child {
+            margin-bottom: 0;
         }
 
-        .welcome-section p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
+        .code-keyword {
+            color: var(--terminal-green);
+        }
+
+        .code-string {
+            color: var(--accent-blue-light);
+        }
+
+        .code-comment {
+            color: var(--text-dim);
+            font-style: italic;
         }
 
         /* Footer */
         footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
             text-align: center;
-            padding: 3rem 0 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        .heart {
-            color: var(--accent-color);
-            animation: heartbeat 1.5s ease-in-out infinite;
-            display: inline-block;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 4rem;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
             }
 
-            .subtitle {
-                font-size: 1rem;
+            nav {
+                gap: 1rem;
             }
 
-            .main-content {
-                grid-template-columns: 1fr;
+            .name {
+                font-size: 1.2rem;
             }
 
             .container {
-                padding: 1rem;
+                padding: 2rem 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+            border-left: 1px solid var(--border-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 0;
+            border: 1px solid var(--border-color);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue-light);
+        }
+
+        /* Firefox scrollbar */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-blue) var(--bg-dark);
+        }
+
+        /* Link styling */
+        a {
+            color: var(--accent-blue-light);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--text-white);
+            text-decoration: underline;
+        }
+
+        /* Skills carousel */
+        .skills-carousel {
+            overflow: hidden;
+            position: relative;
+            padding: 2rem 0;
+            background: transparent;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .skills-carousel:hover {
+            box-shadow: 0 6px 12px rgba(255, 255, 255, 0.25);
+        }
+
+        .carousel-wrapper {
+            width: 100%;
+            overflow: hidden;
+            cursor: grab;
+        }
+
+        .carousel-wrapper:active {
+            cursor: grabbing;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 3rem;
+            animation: scroll 30s linear infinite;
+            width: fit-content;
+            will-change: transform;
+        }
+
+        .carousel-track.scrolling {
+            animation-play-state: paused !important;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-50% - 1.5rem));
+            }
+        }
+
+        .skill-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 100px;
+            text-decoration: none;
+            color: var(--text-grey);
+            transition: all 0.3s ease;
+            padding: 1rem;
+            flex-shrink: 0;
+        }
+
+        .skill-icon:hover {
+            color: var(--text-white);
+            transform: translateY(-5px);
+        }
+
+        .skill-icon .icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skill-icon .icon svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+        }
+
+        .skill-icon .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
     </style>
 </head>
 <body>
-    <div class="background"></div>
-    
+    <header>
+        <div class="header-content">
+            <div class="name">Sebastian Marquez<span class="cursor"></span></div>
+            <nav>
+                <a href="#contact">contact</a>
+            </nav>
+        </div>
+    </header>
+
     <div class="container">
-        <header>
-            <h1>SebMarquez</h1>
-            <p class="subtitle">Welcome to my coding projects portfolio</p>
-        </header>
-
-        <section class="welcome-section fade-in">
-            <h2>Hello! 👋</h2>
-            <p>I miss you! This is where I'm going to put my coding projects :)</p>
-        </section>
-
-        <section class="main-content">
-            <div class="card fade-in">
-                <span class="card-icon">🚀</span>
-                <h2>Projects</h2>
-                <p>Explore my collection of coding projects, experiments, and creative solutions. Each project represents a learning journey and a passion for building things.</p>
+        <section class="hero">
+            <div class="hero-line">
+                <span class="prompt">$</span>
+                <span class="command">whoami</span>
             </div>
-
-            <div class="card fade-in">
-                <span class="card-icon">💻</span>
-                <h2>Skills</h2>
-                <p>Continuously learning and improving my programming skills. From web development to algorithms, I'm always working on something new.</p>
+            <div class="hero-line">
+                <span class="comment">// Sebastian Marquez - Developer</span>
             </div>
-
-            <div class="card fade-in">
-                <span class="card-icon">🌟</span>
-                <h2>About</h2>
-                <p>A developer passionate about creating beautiful, functional, and meaningful software. Always excited to share what I'm working on!</p>
+            <div class="hero-line" style="margin-top: 1.5rem;">
+                <span class="prompt">$</span>
+                <span class="command">cat README.md</span>
+            </div>
+            <div class="hero-line">
+                <span class="comment">// Welcome to my coding projects portfolio</span>
             </div>
         </section>
 
-        <footer>
-            <p>Made with <span class="heart">❤️</span> for coding projects</p>
-        </footer>
+        <section id="about">
+            <div class="section-title">about</div>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="code-keyword">const</span> <span class="code-string">developer</span> = {<br>
+                    &nbsp;&nbsp;<span class="code-string">name</span>: <span class="code-string">"Sebastian Marquez"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">role</span>: <span class="code-string">"Full Stack Developer"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">passion</span>: <span class="code-string">"Building elegant solutions"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">status</span>: <span class="code-string">"Always learning"</span><br>
+                    };
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="section-title">skills</div>
+            <div class="skills-carousel">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track">
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">🐧</span>
+                            <span class="label">Linux</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">C</span>
+                            <span class="label">C</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">🐍</span>
+                            <span class="label">Python</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">JS</span>
+                            <span class="label">JavaScript</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">HTML</span>
+                            <span class="label">HTML</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">CSS</span>
+                            <span class="label">CSS</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">Git</span>
+                            <span class="label">Git</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">Bash</span>
+                            <span class="label">Bash</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">SQL</span>
+                            <span class="label">SQL</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">Vim</span>
+                            <span class="label">Vim</span>
+                        </a>
+                        <!-- Duplicate for seamless loop -->
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">🐧</span>
+                            <span class="label">Linux</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">C</span>
+                            <span class="label">C</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">🐍</span>
+                            <span class="label">Python</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">JS</span>
+                            <span class="label">JavaScript</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">HTML</span>
+                            <span class="label">HTML</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">CSS</span>
+                            <span class="label">CSS</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">Git</span>
+                            <span class="label">Git</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">Bash</span>
+                            <span class="label">Bash</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">SQL</span>
+                            <span class="label">SQL</span>
+                        </a>
+                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
+                            <span class="icon">Vim</span>
+                            <span class="label">Vim</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="section-title">projects</div>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-title">project-01</div>
+                    <div class="card-content">
+                        A collection of coding projects, experiments, and creative solutions. Each project represents a learning journey.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">project-02</div>
+                    <div class="card-content">
+                        Continuously learning and improving programming skills. From web development to algorithms.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">project-03</div>
+                    <div class="card-content">
+                        Building beautiful, functional, and meaningful software. Always excited to share what I'm working on.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="section-title">contact</div>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="code-comment">// Get in touch</span>
+                </div>
+                <div class="code-line">
+                    <span class="code-keyword">const</span> <span class="code-string">contact</span> = {<br>
+                    &nbsp;&nbsp;<span class="code-string">email</span>: <span class="code-string">"your.email@example.com"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">github</span>: <span class="code-string">"@sebmarquez"</span><br>
+                    };
+                </div>
+            </div>
+        </section>
     </div>
 
+    <footer>
+        <div class="hero-line">
+            <span class="prompt">$</span>
+            <span class="comment">// Last updated: 2024</span>
+        </div>
+    </footer>
+
     <script>
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // Carousel scroll functionality
+        const carouselWrapper = document.querySelector('.carousel-wrapper');
+        const carouselTrack = document.querySelector('.carousel-track');
+        let isHovering = false;
+        let currentTransform = 0;
+        let isManualScrolling = false;
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+        // Get current transform from computed style
+        function getCurrentTransform() {
+            const style = window.getComputedStyle(carouselTrack);
+            const matrix = style.transform;
+            if (matrix === 'none' || matrix === '') return 0;
+            const values = matrix.match(/matrix.*\((.+)\)/);
+            if (values) {
+                const nums = values[1].split(',');
+                return parseFloat(nums[4]) || 0;
+            }
+            return 0;
+        }
 
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
+        // Update transform manually
+        function updateTransform(value) {
+            carouselTrack.style.transform = `translateX(${value}px)`;
+            currentTransform = value;
+        }
+
+        // Handle mouse enter - pause animation
+        carouselWrapper.addEventListener('mouseenter', () => {
+            isHovering = true;
+            carouselTrack.classList.add('scrolling');
+            
+            // Stop animation and capture current position
+            let currentPos = getCurrentTransform();
+            
+            // Normalize position to be within one cycle for seamless infinite scroll
+            const totalWidth = carouselTrack.scrollWidth / 2;
+            if (currentPos <= -totalWidth) {
+                currentPos = currentPos % totalWidth;
+                if (currentPos < -totalWidth) currentPos += totalWidth;
+            } else if (currentPos > 0) {
+                currentPos = currentPos % totalWidth;
+                if (currentPos > 0) currentPos -= totalWidth;
+            }
+            
+            carouselTrack.style.animation = 'none';
+            updateTransform(currentPos);
+            isManualScrolling = false;
         });
 
-        // Add parallax effect to background
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const background = document.querySelector('.background');
-            if (background) {
-                background.style.transform = `translateY(${scrolled * 0.5}px)`;
+        // Handle mouse leave - resume animation
+        carouselWrapper.addEventListener('mouseleave', () => {
+            isHovering = false;
+            carouselTrack.classList.remove('scrolling');
+            
+            // Calculate where we are in the animation cycle to resume smoothly
+            const totalWidth = carouselTrack.scrollWidth / 2;
+            const position = Math.abs(currentTransform) % totalWidth;
+            const progress = position / totalWidth;
+            
+            // Resume animation from calculated position
+            carouselTrack.style.animation = 'none';
+            void carouselTrack.offsetWidth; // Force reflow
+            carouselTrack.style.animation = `scroll 30s linear infinite`;
+            carouselTrack.style.animationDelay = `-${progress * 30}s`;
+            carouselTrack.style.transform = '';
+            isManualScrolling = false;
+        });
+
+        // Handle mouse wheel scrolling
+        carouselWrapper.addEventListener('wheel', (e) => {
+            if (!isHovering) return;
+            
+            e.preventDefault();
+            isManualScrolling = true;
+            
+            // Scroll speed
+            const scrollSpeed = 1.2;
+            const delta = e.deltaY * scrollSpeed;
+            
+            // Update position
+            currentTransform += delta;
+            
+            // Calculate total width (half because items are duplicated for seamless loop)
+            const totalWidth = carouselTrack.scrollWidth / 2;
+            
+            // Wrap around for infinite scrolling effect
+            // When scrolling left beyond the duplicate point, wrap to the right
+            if (currentTransform <= -totalWidth) {
+                currentTransform = currentTransform + totalWidth;
             }
+            // When scrolling right beyond start, wrap to the left
+            if (currentTransform > 0) {
+                currentTransform = currentTransform - totalWidth;
+            }
+            
+            // Apply transform
+            updateTransform(currentTransform);
         });
     </script>
 </body>
