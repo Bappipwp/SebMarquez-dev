@@ -21,8 +21,8 @@
             --text-white: #e8e8e8;
             --text-grey: #a0a0a0;
             --text-dim: #6b6b6b;
-            --accent-blue: #4a5568;
-            --accent-blue-light: #5a6578;
+            --accent-blue: #1e3a5f;
+            --accent-blue-light: #4a90d9;
             --border-color: #2a2a2a;
             --terminal-green: #4ade80;
         }
@@ -182,13 +182,15 @@
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
+            border-left: 2px solid var(--accent-blue);
             padding: 1.5rem;
             transition: all 0.2s;
             position: relative;
         }
 
         .card:hover {
-            border-color: var(--accent-blue);
+            border-color: var(--accent-blue-light);
+            border-left-color: var(--accent-blue-light);
             background: var(--bg-dark);
         }
 
@@ -319,12 +321,8 @@
             overflow: hidden;
             position: relative;
             padding: 2rem 0;
-            background: transparent;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .skills-carousel:hover {
-            box-shadow: 0 6px 12px rgba(255, 255, 255, 0.25);
+            background: rgba(30, 58, 95, 0.12);
+            border: 1px solid rgba(30, 58, 95, 0.3);
         }
 
         .carousel-wrapper {
@@ -369,11 +367,34 @@
             transition: all 0.3s ease;
             padding: 1rem;
             flex-shrink: 0;
+            position: relative;
+        }
+
+        .skill-icon::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 40px;
+            background: radial-gradient(ellipse at center bottom, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
         }
 
         .skill-icon:hover {
             color: var(--text-white);
-            transform: translateY(-5px);
+            transform: translateY(-4px);
+        }
+
+        .skill-icon:hover::after {
+            opacity: 1;
+        }
+
+        .carousel-track:hover .skill-icon:not(:hover) {
+            opacity: 0.35;
         }
 
         .skill-icon .icon {
@@ -384,10 +405,15 @@
             justify-content: center;
         }
 
-        .skill-icon .icon svg {
+        .skill-icon .icon img {
             width: 100%;
             height: 100%;
-            fill: currentColor;
+            transition: filter 0.3s ease;
+            filter: brightness(1);
+        }
+
+        .skill-icon:hover .icon img {
+            filter: brightness(2);
         }
 
         .skill-icon .label {
@@ -402,6 +428,7 @@
         <div class="header-content">
             <div class="name">Sebastian Marquez<span class="cursor"></span></div>
             <nav>
+                <a href="./resume.pdf" target="_blank">resume</a>
                 <a href="#contact">contact</a>
             </nav>
         </div>
@@ -414,14 +441,14 @@
                 <span class="command">whoami</span>
             </div>
             <div class="hero-line">
-                <span class="comment">// Sebastian Marquez - Developer</span>
+                <span class="comment">// Sebastian Marquez - 2027</span>
             </div>
             <div class="hero-line" style="margin-top: 1.5rem;">
                 <span class="prompt">$</span>
                 <span class="command">cat README.md</span>
             </div>
             <div class="hero-line">
-                <span class="comment">// Welcome to my coding projects portfolio</span>
+                <span class="comment">// CS student. Builder. Las Cruces, NM.</span>
             </div>
         </section>
 
@@ -431,9 +458,11 @@
                 <div class="code-line">
                     <span class="code-keyword">const</span> <span class="code-string">developer</span> = {<br>
                     &nbsp;&nbsp;<span class="code-string">name</span>: <span class="code-string">"Sebastian Marquez"</span>,<br>
-                    &nbsp;&nbsp;<span class="code-string">role</span>: <span class="code-string">"Full Stack Developer"</span>,<br>
-                    &nbsp;&nbsp;<span class="code-string">passion</span>: <span class="code-string">"Building elegant solutions"</span>,<br>
-                    &nbsp;&nbsp;<span class="code-string">status</span>: <span class="code-string">"Always learning"</span><br>
+                    &nbsp;&nbsp;<span class="code-string">location</span>: <span class="code-string">"Las Cruces, NM"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">studying</span>: <span class="code-string">"CS @ NMSU, graduating 2027"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">building</span>: <span class="code-string">"tools that solve real problems — home lab, budgeting apps, whatever's next"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">background</span>: <span class="code-string">"full-time student, full-time worker, trying to build something of my own"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">interests</span>: <span class="code-string">"music, ranching, tinkering"</span><br>
                     };
                 </div>
             </div>
@@ -445,85 +474,61 @@
                 <div class="carousel-wrapper">
                     <div class="carousel-track">
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">🐧</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/linux/a0a0a0" alt="Linux"></span>
                             <span class="label">Linux</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">C</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/c/a0a0a0" alt="C"></span>
                             <span class="label">C</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">🐍</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/python/a0a0a0" alt="Python"></span>
                             <span class="label">Python</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">JS</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/javascript/a0a0a0" alt="JavaScript"></span>
                             <span class="label">JavaScript</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">HTML</span>
-                            <span class="label">HTML</span>
-                        </a>
-                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">CSS</span>
-                            <span class="label">CSS</span>
-                        </a>
-                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">Git</span>
-                            <span class="label">Git</span>
-                        </a>
-                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">Bash</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/gnubash/a0a0a0" alt="Bash"></span>
                             <span class="label">Bash</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">SQL</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/sqlite/a0a0a0" alt="SQL"></span>
                             <span class="label">SQL</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">Vim</span>
-                            <span class="label">Vim</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/godotengine/a0a0a0" alt="Godot"></span>
+                            <span class="label">Godot</span>
                         </a>
                         <!-- Duplicate for seamless loop -->
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">🐧</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/linux/a0a0a0" alt="Linux"></span>
                             <span class="label">Linux</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">C</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/c/a0a0a0" alt="C"></span>
                             <span class="label">C</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">🐍</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/python/a0a0a0" alt="Python"></span>
                             <span class="label">Python</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">JS</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/javascript/a0a0a0" alt="JavaScript"></span>
                             <span class="label">JavaScript</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">HTML</span>
-                            <span class="label">HTML</span>
-                        </a>
-                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">CSS</span>
-                            <span class="label">CSS</span>
-                        </a>
-                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">Git</span>
-                            <span class="label">Git</span>
-                        </a>
-                        <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">Bash</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/gnubash/a0a0a0" alt="Bash"></span>
                             <span class="label">Bash</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">SQL</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/sqlite/a0a0a0" alt="SQL"></span>
                             <span class="label">SQL</span>
                         </a>
                         <a href="https://github.com/Bappipwp" class="skill-icon" target="_blank">
-                            <span class="icon">Vim</span>
-                            <span class="label">Vim</span>
+                            <span class="icon"><img src="https://cdn.simpleicons.org/godotengine/a0a0a0" alt="Godot"></span>
+                            <span class="label">Godot</span>
                         </a>
                     </div>
                 </div>
@@ -534,21 +539,30 @@
             <div class="section-title">projects</div>
             <div class="grid">
                 <div class="card">
-                    <div class="card-title">project-01</div>
+                    <div class="card-title">BlackJack+</div>
                     <div class="card-content">
-                        A collection of coding projects, experiments, and creative solutions. Each project represents a learning journey.
+                        Feature-rich blackjack game built with Godot 4.5. Extended gameplay with power-ups, a quest system, betting mechanics, and an in-game store. Led UI integration and core functionality on a 5-person team.<br><br>
+                        <span style="color: var(--text-dim);">Godot &nbsp;·&nbsp; GDScript</span>
+                    </div>
+                    <div style="margin-top: 1.25rem;">
+                        <a href="https://github.com/Bappipwp/BlackjackProject" target="_blank" style="color: var(--terminal-green); font-size: 0.8rem;">→ view repo</a>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-title">project-02</div>
+                    <div class="card-title">trading-bot</div>
                     <div class="card-content">
-                        Continuously learning and improving programming skills. From web development to algorithms.
+                        Modular, strategy-agnostic trading bot for US equities via the Alpaca API. Handles data fetching, risk management, order execution, and portfolio tracking. Swap strategies without touching any other code.<br><br>
+                        <span style="color: var(--text-dim);">Python &nbsp;·&nbsp; Alpaca API &nbsp;·&nbsp; pandas</span>
+                    </div>
+                    <div style="margin-top: 1.25rem;">
+                        <a href="https://github.com/Bappipwp/trading-bot" target="_blank" style="color: var(--terminal-green); font-size: 0.8rem;">→ view repo</a>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-title">project-03</div>
+                    <div class="card-title">ChessPlus</div>
                     <div class="card-content">
-                        Building beautiful, functional, and meaningful software. Always excited to share what I'm working on.
+                        <span style="color: var(--text-dim);">// in development</span><br><br>
+                        Chess engine with extended mechanics. More soon.
                     </div>
                 </div>
             </div>
@@ -562,8 +576,10 @@
                 </div>
                 <div class="code-line">
                     <span class="code-keyword">const</span> <span class="code-string">contact</span> = {<br>
-                    &nbsp;&nbsp;<span class="code-string">email</span>: <span class="code-string">"your.email@example.com"</span>,<br>
-                    &nbsp;&nbsp;<span class="code-string">github</span>: <span class="code-string">"@sebmarquez"</span><br>
+                    &nbsp;&nbsp;<span class="code-string">email</span>: <span class="code-string">"<a href="mailto:sebmarquez.dev@proton.me">sebmarquez.dev@proton.me</a>"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">github</span>: <span class="code-string">"<a href="https://github.com/Bappipwp" target="_blank">@Bappipwp</a>"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">linkedin</span>: <span class="code-string">"<a href="https://www.linkedin.com/in/sebastian-marquez-trevizo-48ba1a34b/" target="_blank">sebastian-marquez-trevizo</a>"</span>,<br>
+                    &nbsp;&nbsp;<span class="code-string">resume</span>: <span class="code-string">"<a href="./resume.pdf" target="_blank">resume.pdf</a>"</span><br>
                     };
                 </div>
             </div>
@@ -573,7 +589,7 @@
     <footer>
         <div class="hero-line">
             <span class="prompt">$</span>
-            <span class="comment">// Last updated: 2024</span>
+            <span class="comment">// Last updated: 2026</span>
         </div>
     </footer>
 
